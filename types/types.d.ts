@@ -1,0 +1,27 @@
+export { Blueprint } from "./schema.blueprints.d.ts";
+export type Type = {
+  basePrice: number;
+  capacity: number;
+  description?: string;
+  descriptionID?: number;
+  graphicID?: number;
+  groupID: number;
+  iconID?: number;
+  marketGroupID?: number;
+  mass: number;
+  metaGroupID?: number;
+  platforms: number;
+  portionSize: number;
+  published: number;
+  radius: number;
+  typeID: number;
+  "typeName_en-us": string;
+  typeNameID: number;
+  volume: number;
+};
+
+export type Types = { [key: string]: Type };
+
+export type Group = {
+  "groupName_en-us": string;
+};

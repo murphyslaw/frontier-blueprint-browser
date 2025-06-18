@@ -1,0 +1,140 @@
+:root {
+  color-scheme: dark;
+
+  --bg: #000;
+  --accent-bg: #2b2b2b;
+  --text: #faf0e5;
+  --text-light: #ababab;
+  --accent: #ff4700;
+  --accent-text: var(--bg);
+  --accent-hover: inherited;
+  --preformatted: #ccc;
+  --disabled: #111;
+}
+
+@font-face {
+  font-family: Headline;
+  src: url(/assets/fonts/Disket-Mono-Regular.woff2) format("woff2"),
+    url(/assets/fonts/Disket-Mono-Regular.woff) format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: Headline;
+  src: url(/assets/fonts/Disket-Mono-Bold.woff2) format("woff2"),
+    url(/assets/fonts/Disket-Mono-Bold.woff) format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: Body;
+  src: url(/assets/fonts/FavoritMonoStd-Light.woff2) format("woff2"),
+    url(/assets/fonts/FavoritMonoStd-Light.woff) format("woff");
+  font-weight: 200;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: Body;
+  src: url(/assets/fonts/FavoritMonoStd-Book.woff2) format("woff2"),
+    url(/assets/fonts/FavoritMonoStd-Book.woff) format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: Body;
+  src: url(/assets/fonts/FavoritMonoStd-Regular.woff2) format("woff2"),
+    url(/assets/fonts/FavoritMonoStd-Regular.woff) format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: Body;
+  src: url(/assets/fonts/FavoritMonoStd-Bold.woff2) format("woff2"),
+    url(/assets/fonts/FavoritMonoStd-Bold.woff) format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap
+}
+
+html {
+  font-family: "Body", system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-transform: uppercase;
+  font-family: "Headline", system-ui, sans-serif;
+}
+
+#search {
+  margin-top: 3rem;
+}
+
+[data-blueprintTypeID] {
+  table:first-child {
+    width: fit-content;
+
+    th,
+    td {
+      border: none;
+    }
+  }
+
+  table:not(:first-child) {
+    width: 100%;
+
+    tfoot>tr:last-child td {
+      border: none;
+      font-weight: bold;
+    }
+
+    td:first-child {
+      text-align: center;
+    }
+  }
+}
+
+header nav a[aria-current] {
+  background-color: initial;
+
+  &:not(:visited) {
+    --accent-text: initial;
+    border-color: initial;
+  }
+}
+
+[data-volume] {
+  &.warning {
+    color: orange;
+  }
+
+  &.critical {
+    color: var(--accent);
+  }
+}
+
+summary {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
