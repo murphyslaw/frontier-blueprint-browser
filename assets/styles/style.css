@@ -86,6 +86,17 @@ h6 {
   font-family: "Headline", system-ui, sans-serif;
 }
 
+.screen-reader-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
 #search {
   margin-top: 3rem;
 }
@@ -115,7 +126,7 @@ h6 {
 }
 
 header nav a[aria-current] {
-  background-color: initial;
+  background-color: var(--accent-bg);
 
   &:not(:visited) {
     --accent-text: initial;
