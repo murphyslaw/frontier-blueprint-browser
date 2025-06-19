@@ -3,6 +3,7 @@
 
   --bg: #000;
   --accent-bg: #2b2b2b;
+  --accent-bg-hover: #3b3b3b;
   --text: #faf0e5;
   --text-light: #ababab;
   --accent: #ff4700;
@@ -97,22 +98,69 @@ h6 {
   border: 0;
 }
 
+.group-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  .group-link {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-bg);
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+
+    &:visited {
+      color: var(--text);
+    }
+
+    &:hover,
+    &:visited:hover {
+      color: var(--accent);
+    }
+  }
+}
+
 #search {
   margin-top: 3rem;
 }
 
 [data-blueprintTypeID] {
   table:first-child {
-    width: fit-content;
+    width: 100%;
+    border: none;
 
     th,
     td {
       border: none;
+
+      .group-link {
+        color: var(--text);
+        text-decoration: none;
+
+        &:hover {
+          color: var(--accent);
+        }
+      }
+
     }
   }
 
   table:not(:first-child) {
     width: 100%;
+    border: none;
+
+    tr:hover {
+      background-color: var(--accent-bg-hover);
+    }
+
+    th,
+    td {
+      border: none;
+      border-bottom: 1px solid var(--text);
+    }
 
     tfoot>tr:last-child td {
       border: none;
@@ -132,6 +180,10 @@ header nav a[aria-current] {
     --accent-text: initial;
     border-color: initial;
   }
+}
+
+input[id^="runs-"] {
+  width: 75%;
 }
 
 [data-volume] {

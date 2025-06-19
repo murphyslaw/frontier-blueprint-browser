@@ -3,7 +3,7 @@ export default function () {
     <input
       type="search"
       id="search"
-      placeholder="What do you want to manufacture?"
+      placeholder="Search..."
       aria-label="Search and filter the types"
     />
   );

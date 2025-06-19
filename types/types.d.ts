@@ -25,3 +25,10 @@ export type Types = { [key: string]: Type };
 export type Group = {
   groupName: string;
 };
+
+export type TypelistSelection = {
+  [key: string]: {
+    name: string;
+    namingBase: "inputs" | "outputs";
+  };
+};

@@ -15,13 +15,15 @@ export default function Row(data: Data & Lume.Data) {
         <comp.Quantity quantity={quantity} />
       </td>
 
-      <td style="display: flex; align-items: center; gap: 0.5rem;">
-        {name && (
-          <>
-            <img src={`/assets/images/type-${iconId}.png`} />
-            {name}
-          </>
-        )}
+      <td>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          {name && (
+            <>
+              <img src={`/assets/images/type-${iconId}.png`} />
+              {name}
+            </>
+          )}
+        </div>
       </td>
 
       <td>

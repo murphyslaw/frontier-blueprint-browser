@@ -1,5 +1,3 @@
 - ore / material breakdown
-- jump to group links
-- max cargo hold volume
-- set default output volume
-- set default quantity
+- set cargo volume for dynamic threshold warning
+- max job amount button for selected cargo volume
