@@ -51,11 +51,11 @@ export default function (data: Data & Lume.Data) {
         </tbody>
       </table>
 
-      <h3>Inputs</h3>
+      <h3>&#10095;&#10095; Input</h3>
 
       <comp.SummaryTable summary={inputSummary} />
 
-      <h3>Outputs</h3>
+      <h3>Output &#10095;&#10095;</h3>
 
       <comp.SummaryTable summary={outputSummary} />
     </section>
