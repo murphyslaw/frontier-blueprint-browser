@@ -7,8 +7,6 @@
     "lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
     "build": "deno task lume",
     "serve": "deno task lume -s",
-    "deploy": "surge _site",
-    "traffic": "surge traffic frontier-blueprint-browser.surge.sh",
     "data": "deno run --env-file -A ./scripts/update-data.ts"
   },
   "compilerOptions": {
