@@ -15,7 +15,7 @@ export type Type = {
   published: number;
   radius: number;
   typeID: number;
-  "typeName_en-us": string;
+  typeName: string;
   typeNameID: number;
   volume: number;
 };
@@ -23,5 +23,5 @@ export type Type = {
 export type Types = { [key: string]: Type };
 
 export type Group = {
-  "groupName_en-us": string;
+  groupName: string;
 };

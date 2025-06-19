@@ -27,10 +27,10 @@ export default function (data: Data & Lume.Data) {
   const type = getType(blueprint, types, structure.namingBase);
 
   return (
-    <details data-name={type["typeName_en-us"]}>
+    <details data-name={type.typeName}>
       <summary>
         <img src={`/assets/images/type-${type.iconID}.png`} />
-        {type["typeName_en-us"]}
+        {type.typeName}
       </summary>
 
       <comp.Blueprint blueprint={blueprint} />

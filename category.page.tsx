@@ -38,11 +38,11 @@ export default function (data: Data & Lume.Data) {
     return acc;
   }, []);
 
-  sort(typesWithBlueprints, "typeName_en-us");
+  sort(typesWithBlueprints, "typeName");
 
   const grouped = Object.groupBy(
     typesWithBlueprints,
-    ({ groupID }) => groups[String(groupID)]["groupName_en-us"] ?? "unknown"
+    ({ groupID }) => groups[String(groupID)].groupName ?? "unknown"
   );
 
   return (

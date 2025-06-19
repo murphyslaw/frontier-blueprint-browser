@@ -14,7 +14,7 @@ export default function (data: Data & Lume.Data) {
           <comp.Row
             key={type.typeID}
             quantity={quantity}
-            name={type["typeName_en-us"]}
+            name={type.typeName}
             volume={type.volume}
             mass={type.mass}
             iconId={type.iconID}

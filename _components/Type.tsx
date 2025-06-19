@@ -14,10 +14,10 @@ export default function (data: Data & Lume.Data) {
 
   return (
     <>
-      <details data-name={type["typeName_en-us"]}>
+      <details data-name={type.typeName}>
         <summary>
           <img src={`/assets/images/type-${type.iconID}.png`} />
-          {type["typeName_en-us"]}
+          {type.typeName}
         </summary>
 
         {blueprints.map((blueprint) => (

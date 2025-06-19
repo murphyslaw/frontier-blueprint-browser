@@ -59,7 +59,7 @@ await run(
 );
 
 // cleanup source
-await Deno.remove(source);
+await Deno.remove(source, { recursive: true });
 
 // move and name data files
 await renameFiles(dataDir, [
@@ -74,9 +74,9 @@ await renameFiles(dataDir, [
 ]);
 
 // cleanup data
-await Deno.remove(join(dataDir, "fsd_binary"));
-await Deno.remove(join(dataDir, "fsd_lite"));
-await Deno.remove(join(dataDir, "resource_pickle"));
+await Deno.remove(join(dataDir, "fsd_binary"), { recursive: true });
+await Deno.remove(join(dataDir, "fsd_lite"), { recursive: true });
+await Deno.remove(join(dataDir, "resource_pickle"), { recursive: true });
 
 // get structure ids from _data/typelistSelection.json
 const structureIds = Object.keys(
