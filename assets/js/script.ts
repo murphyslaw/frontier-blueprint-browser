@@ -6,6 +6,8 @@ function updateElements(
   runs: number,
   cb: (value: number) => string,
 ) {
+  console.log("updateElements");
+
   const elements = root.querySelectorAll<HTMLElement>(`[data-${attribute}]`) ??
     [];
 
@@ -27,6 +29,8 @@ function updateElements(
 }
 
 function runsChangeHandler(event: Event) {
+  console.log("runsChangeHandler");
+
   const input: HTMLInputElement = event.currentTarget as HTMLInputElement;
   const blueprintWrapper = input.closest<HTMLElement>("[data-blueprintTypeID]");
 
@@ -125,6 +129,8 @@ function fuzzySearch(str: string, query: string): boolean {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOMContentLoaded");
+
   const runsInputs = document.querySelectorAll<HTMLInputElement>(
     'input[id^="runs-"]',
   );
