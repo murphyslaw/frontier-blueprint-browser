@@ -1,5 +1,4 @@
 import { anchorize } from "../lib/anchorize.ts";
-import { durationFormat } from "../lib/format.ts";
 import { Summary } from "../lib/summary.ts";
 import { Typelist } from "../types/schema.typelist.d.ts";
 import type { Blueprint, TypelistSelection, Types } from "../types/types.d.ts";
@@ -58,19 +57,16 @@ export default function (data: Data & Lume.Data) {
         <tbody>
           <tr>
             <td>
-              <input
-                type="number"
-                id={`runs-${blueprint.blueprintTypeID}`}
-                value="1"
-                min={1}
-                max={blueprint.maxProductionLimit}
+              <comp.JobAmount
+                blueprint={blueprint}
+                volume={inputSummary.volume}
               />
             </td>
 
             <td>
-              <span data-duration={blueprint.activities.manufacturing.time}>
-                {durationFormat(blueprint.activities.manufacturing.time)}
-              </span>
+              <comp.Duration
+                duration={blueprint.activities.manufacturing.time}
+              />
             </td>
 
             <td>

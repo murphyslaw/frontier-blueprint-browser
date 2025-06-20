@@ -1,5 +1,4 @@
 export const title = "EVE:Frontier Blueprint Browser";
-export const features = ["search"];
 
 export default function (data: Lume.Data) {
   const { title, children, comp, url } = data;
@@ -30,7 +29,11 @@ export default function (data: Lume.Data) {
             <comp.Nav url={url} />
           </header>
 
-          {data.features.includes("search") && <comp.Search />}
+          <section role="search">
+            <comp.Search />
+
+            <comp.Cargo />
+          </section>
 
           {children}
 

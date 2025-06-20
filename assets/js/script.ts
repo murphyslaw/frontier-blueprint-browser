@@ -5,9 +5,7 @@ function updateElements(
   attribute: "quantity" | "duration" | "volume" | "mass",
   runs: number,
   cb: (value: number) => string,
-) {
-  console.log("updateElements");
-
+): void {
   const elements = root.querySelectorAll<HTMLElement>(`[data-${attribute}]`) ??
     [];
 
@@ -17,20 +15,22 @@ function updateElements(
     element.textContent = cb(value);
 
     if (attribute === "volume") {
-      if (value > 990) {
+      const cargoElement = document.querySelector<HTMLInputElement>("#cargo");
+
+      if (!cargoElement) continue;
+
+      const cargo = Number(cargoElement.value);
+
+      if (value > cargo) {
         element.classList.add("critical");
-      } else if (value > 520) {
-        element.classList.add("warning");
       } else {
-        element.classList.remove("critical", "warning");
+        element.classList.remove("critical");
       }
     }
   }
 }
 
-function runsChangeHandler(event: Event) {
-  console.log("runsChangeHandler");
-
+function runsChangeHandler(event: Event): void {
   const input: HTMLInputElement = event.currentTarget as HTMLInputElement;
   const blueprintWrapper = input.closest<HTMLElement>("[data-blueprintTypeID]");
 
@@ -60,6 +60,22 @@ function runsChangeHandler(event: Event) {
     Number(input.value),
     (value) => String(value),
   );
+}
+
+function maxClickHandler(event: Event) {
+  const buttonElement = event.currentTarget as HTMLButtonElement;
+  const inputElement = buttonElement.previousElementSibling as HTMLInputElement;
+  const cargoElement = document.querySelector<HTMLInputElement>("#cargo");
+
+  if (!inputElement) return;
+  if (!cargoElement) return;
+
+  const max = Math.floor(
+    Number(cargoElement.value) / Number(buttonElement.value),
+  );
+
+  inputElement.value = String(max);
+  inputElement.dispatchEvent(new Event("change", { bubbles: true }));
 }
 
 function searchChangeHandler(event: Event) {
@@ -102,6 +118,16 @@ function searchChangeHandler(event: Event) {
   }
 }
 
+function cargoChangeHandler() {
+  const runsInputs = document.querySelectorAll<HTMLInputElement>(
+    'input[id^="runs-"]',
+  );
+
+  for (const runsInput of runsInputs) {
+    runsInput.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+}
+
 // see https://learnersbucket.com/examples/interview/implement-a-fuzzy-search-in-javascript/
 function fuzzySearch(str: string, query: string): boolean {
   // convert the query and str
@@ -129,16 +155,19 @@ function fuzzySearch(str: string, query: string): boolean {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("DOMContentLoaded");
-
   const runsInputs = document.querySelectorAll<HTMLInputElement>(
     'input[id^="runs-"]',
   );
 
   for (const input of runsInputs) {
     input.addEventListener("change", runsChangeHandler);
+
+    input.nextElementSibling?.addEventListener("click", maxClickHandler);
   }
 
   const searchInput = document.querySelector<HTMLInputElement>("input#search");
   searchInput?.addEventListener("input", searchChangeHandler);
+
+  const cargoInput = document.querySelector<HTMLInputElement>("#cargo");
+  cargoInput?.addEventListener("change", cargoChangeHandler);
 });

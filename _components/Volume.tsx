@@ -7,20 +7,12 @@ interface Data {
 export default function (data: Data) {
   const { volume } = data;
 
-  let className = "";
-
-  if (volume > 990) {
-    className = "critical";
-  } else if (volume > 520) {
-    className = "warning";
-  }
-
   return (
-    <>
-      <span data-volume={volume} className={className}>
-        {volumeFormat(volume)}
-      </span>{" "}
-      m<sup>3</sup>
-    </>
+    <span style="text-wrap: nowrap;">
+      <span data-volume={volume}>{volumeFormat(volume)}</span>{" "}
+      <abbr title="cubic meters">
+        m<sup>3</sup>
+      </abbr>
+    </span>
   );
 }

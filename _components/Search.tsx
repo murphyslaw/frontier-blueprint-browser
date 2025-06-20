@@ -3,8 +3,8 @@ export default function () {
     <input
       type="search"
       id="search"
-      placeholder="Search..."
-      aria-label="Search and filter the types"
+      placeholder="Search"
+      aria-label="Search and filter types"
     />
   );
 }

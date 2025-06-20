@@ -18,7 +18,14 @@ site.add(
 site.add("/CNAME");
 
 site.use(jsx());
-site.use(esbuild());
+site.use(esbuild(
+  {
+    options: {
+      minify: true,
+      target: "es6",
+    },
+  },
+));
 site.use(lightningCSS());
 
 export default site;

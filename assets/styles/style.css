@@ -87,6 +87,11 @@ h6 {
   font-family: "Headline", system-ui, sans-serif;
 }
 
+abbr[title] {
+  text-decoration: none;
+  font-variant: normal;
+}
+
 .screen-reader-only {
   position: absolute;
   width: 1px;
@@ -96,6 +101,15 @@ h6 {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+section[role="search"] {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  margin: 3rem 0 0 0;
+  padding: 0;
+  border: none;
 }
 
 .group-links {
@@ -124,7 +138,7 @@ h6 {
 }
 
 #search {
-  margin-top: 3rem;
+  width: 100%;
 }
 
 [data-blueprintTypeID] {
@@ -187,10 +201,6 @@ input[id^="runs-"] {
 }
 
 [data-volume] {
-  &.warning {
-    color: orange;
-  }
-
   &.critical {
     color: var(--accent);
   }
