@@ -16,7 +16,10 @@ export default function (data: Data & Lume.Data) {
       <details data-name={type.typeName}>
         <summary>
           <img src={`/assets/images/type-${type.iconID}.png`} />
+
           {type.typeName}
+
+          <comp.BOMLink typeID={type.typeID} />
         </summary>
 
         {blueprints.map((blueprint) => (
