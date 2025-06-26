@@ -1,3 +1,5 @@
+import { Blueprint } from "./schema.blueprints.d.ts";
+
 export { Blueprint } from "./schema.blueprints.d.ts";
 export type Type = {
   basePrice: number;
@@ -26,9 +28,17 @@ export type Group = {
   groupName: string;
 };
 
-export type TypelistSelection = {
-  [key: string]: {
-    name: string;
-    namingBase: "inputs" | "outputs";
-  };
-};
+export interface Structure {
+  structureID: number;
+  blueprintTypeIDs: number[];
+  name: string;
+  type: "printer" | "assembler" | "shipyard" | "refinery";
+}
+
+export interface Structures {
+  [structureID: string]: Structure;
+}
+
+export interface Blueprints {
+  [blueprintTypeID: string]: Blueprint;
+}

@@ -1,3 +1,5 @@
+import { massFormat } from "../lib/format.ts";
+
 interface Data {
   mass: number;
 }
@@ -7,7 +9,8 @@ export default function (data: Data) {
 
   return (
     <span style="text-wrap: nowrap;">
-      <span data-mass={mass}>{mass}</span> <abbr title="kilograms">kg</abbr>
+      <span data-mass={mass}>{massFormat(mass)}</span>{" "}
+      <abbr title="kilograms">kg</abbr>
     </span>
   );
 }

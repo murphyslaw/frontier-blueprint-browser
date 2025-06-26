@@ -1,16 +1,15 @@
-import { findBlueprints } from "../lib/blueprints.ts";
-import { Blueprint } from "../types/schema.blueprints.d.ts";
+import { BlueprintDB } from "../lib/BlueprintDB.ts";
 import { Type } from "../types/types.d.ts";
 
 interface Data {
   type: Type;
-  blueprints: Blueprint[];
+  blueprintDB: BlueprintDB;
 }
 
 export default function (data: Data & Lume.Data) {
-  const { type, comp } = data;
+  const { type, blueprintDB, comp } = data;
 
-  const blueprints = findBlueprints(data.blueprints, type.typeID ?? 0);
+  const blueprints = blueprintDB.findByOutput(type.typeID);
 
   return (
     <>

@@ -1,45 +1,24 @@
 import { anchorize } from "../lib/anchorize.ts";
-import { Summary } from "../lib/summary.ts";
-import { Typelist } from "../types/schema.typelist.d.ts";
-import type { Blueprint, TypelistSelection, Types } from "../types/types.d.ts";
+import { Blueprint } from "../lib/Blueprint.ts";
+import { StructureDB } from "../lib/StructureDB.ts";
+import { Summary } from "../lib/Summary.ts";
+import { TypeDB } from "../lib/TypeDB.ts";
+import type { Structures, Types } from "../types/types.d.ts";
 
 interface Data {
   blueprint: Blueprint;
   types: Types;
-  typelist: Typelist;
-}
-
-function findStructuresForBlueprint(
-  blueprint: Blueprint,
-  typelist: Typelist,
-  typelistSelection: TypelistSelection
-): string[] {
-  const structures = new Set<string>();
-
-  for (const [structureId, structure] of Object.entries(typelist)) {
-    if (structure.includedTypeIDs.includes(blueprint.blueprintTypeID)) {
-      const details = typelistSelection[structureId];
-
-      if (!details) continue;
-
-      structures.add(details.name);
-    }
-  }
-
-  return Array.from(structures);
+  structures: Structures;
 }
 
 export default function (data: Data & Lume.Data) {
-  const { blueprint, types, comp, typelist, typelistSelection } = data;
+  const { blueprint, types, comp, structures } = data;
 
-  const inputSummary = new Summary(
-    types,
-    blueprint.activities.manufacturing.materials
-  );
-  const outputSummary = new Summary(
-    types,
-    blueprint.activities.manufacturing.products
-  );
+  const structureDB = StructureDB.fromJSON(structures);
+  const typeDB = TypeDB.fromJSON(types);
+
+  const inputSummary = new Summary(typeDB, blueprint.inputs);
+  const outputSummary = new Summary(typeDB, blueprint.outputs);
 
   return (
     <section data-blueprintTypeID={String(blueprint.blueprintTypeID)}>
@@ -50,7 +29,7 @@ export default function (data: Data & Lume.Data) {
 
             <th>Time</th>
 
-            <th>Facilities</th>
+            <th>Structures</th>
           </tr>
         </thead>
 
@@ -64,26 +43,22 @@ export default function (data: Data & Lume.Data) {
             </td>
 
             <td>
-              <comp.Duration
-                duration={blueprint.activities.manufacturing.time}
-              />
+              <comp.Duration duration={blueprint.time} />
             </td>
 
             <td>
-              {findStructuresForBlueprint(
-                blueprint,
-                typelist,
-                typelistSelection
-              ).map((structure, index) => [
-                index > 0 && ", ",
-                <a
-                  class="group-link"
-                  key={structure}
-                  href={`/#${anchorize(structure)}`}
-                >
-                  {structure}
-                </a>,
-              ])}
+              {structureDB
+                .withBlueprint(blueprint.blueprintTypeID)
+                .map((structure, index) => [
+                  index > 0 && ", ",
+                  <a
+                    class="group-link"
+                    key={structure.name}
+                    href={`/#${anchorize(structure.name)}`}
+                  >
+                    {structure.name}
+                  </a>,
+                ])}
             </td>
           </tr>
         </tbody>

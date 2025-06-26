@@ -210,4 +210,17 @@ summary {
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  a {
+    margin-left: auto;
+    color: var(--accent-bg-hover);
+  }
+
+  a:visited {
+    color: var(--accent-bg-hover);
+  }
+
+  a:hover {
+    color: var(--accent)
+  }
 }

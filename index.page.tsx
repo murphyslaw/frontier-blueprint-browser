@@ -1,40 +1,32 @@
 import { anchorize } from "./lib/anchorize.ts";
+import { BlueprintDB } from "./lib/BlueprintDB.ts";
 import { sort } from "./lib/sort.ts";
-import { Typelist } from "./types/schema.typelist.d.ts";
-import { Blueprint, Type, TypelistSelection } from "./types/types.d.ts";
+import { StructureDB } from "./lib/StructureDB.ts";
+import { Blueprints, Structures } from "./types/types.d.ts";
 
 export const layout = "layout.tsx";
 
 interface Data {
-  blueprintsbyid: Blueprint[];
-  blueprintsbymaterialtypeids: { [key: string]: number[] };
-  types: Type[];
-  typelistSelection: TypelistSelection;
-  typelist: Typelist;
+  blueprints: Blueprints;
+  structures: Structures;
 }
 
 export default function (data: Data & Lume.Data) {
-  const { typelistSelection, typelist, comp } = data;
+  const { comp } = data;
 
-  const structures: (Typelist["key"] & {
-    blueprints: Blueprint[];
-    namingBase: "inputs" | "outputs";
-    name: string;
-  })[] = [];
+  const blueprintDB = BlueprintDB.fromJSON(data.blueprints);
+  const structureDB = StructureDB.fromJSON(data.structures);
 
-  for (const [id, { name, namingBase }] of Object.entries(typelistSelection)) {
-    const typelistItem = typelist[id];
-    const blueprints = typelistItem.includedTypeIDs.map(
-      (blueprintId) => data.blueprints[blueprintId]
-    );
-
-    structures.push({
-      ...typelistItem,
-      blueprints,
-      name,
-      namingBase,
+  const structures = structureDB.find().map((structure) => {
+    const blueprints = blueprintDB.find({
+      blueprintTypeIDs: structure.blueprintTypeIDs,
     });
-  }
+
+    return {
+      blueprints,
+      name: structure.name,
+    };
+  });
 
   sort(structures, "name");
 

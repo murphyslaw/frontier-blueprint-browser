@@ -1,4 +1,4 @@
-import { Summary } from "../lib/summary.ts";
+import { Summary } from "../lib/Summary.ts";
 
 interface Data {
   summary: Summary;

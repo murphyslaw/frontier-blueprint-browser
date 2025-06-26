@@ -11,3 +11,7 @@ export function durationFormat(duration: number): string {
 export function volumeFormat(volume: number): string {
   return volume.toFixed(2);
 }
+
+export function massFormat(mass: number): string {
+  return mass.toFixed(2);
+}

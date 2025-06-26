@@ -1,3 +1,4 @@
+import { BlueprintDB } from "./lib/BlueprintDB.ts";
 import { sort } from "./lib/sort.ts";
 import { Blueprint, Group, Type } from "./types/types.d.ts";
 
@@ -12,6 +13,8 @@ interface Data {
 
 export default function (data: Data & Lume.Data) {
   const { blueprints, types, groups, comp } = data;
+
+  const blueprintDB = BlueprintDB.fromJSON(blueprints);
 
   const typeIdsWithBlueprints = Object.values(blueprints).reduce<Set<number>>(
     (acc, blueprint) => {
@@ -52,7 +55,7 @@ export default function (data: Data & Lume.Data) {
           <h2>{group}</h2>
 
           {grouped[group]?.map((type) => (
-            <comp.Type type={type} />
+            <comp.Type type={type} blueprintDB={blueprintDB} />
           ))}
         </div>
       ))}

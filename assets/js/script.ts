@@ -32,8 +32,9 @@ function updateElements(
 
 function runsChangeHandler(event: Event): void {
   const input: HTMLInputElement = event.currentTarget as HTMLInputElement;
-  const blueprintWrapper = input.closest<HTMLElement>("[data-blueprintTypeID]");
+  if (!input) return;
 
+  const blueprintWrapper = input.closest<HTMLElement>("[data-blueprintTypeID]");
   if (!blueprintWrapper) return;
 
   updateElements(

@@ -1,6 +1,62 @@
 import { join } from "jsr:@std/path";
 import { JsonFileStore } from "../lib/JsonFileStore.ts";
-import { Blueprint, Type } from "../types/types.d.ts";
+import { Blueprint, Structures, Type } from "../types/types.d.ts";
+
+interface Typelist {
+  [key: string]: {
+    includedTypeIDs: number[];
+  };
+}
+
+const structuresExtensions: Record<
+  string,
+  { name: string; type: "printer" | "assembler" | "shipyard" | "refinery" }
+> = {
+  "814": {
+    name: "Portable Printer",
+    type: "printer",
+  },
+  "815": {
+    name: "Printer S",
+    type: "printer",
+  },
+  "816": {
+    name: "Printer L",
+    type: "printer",
+  },
+  "836": {
+    name: "Portable Refinery",
+    type: "refinery",
+  },
+  "837": {
+    name: "Refinery",
+    type: "refinery",
+  },
+  "838": {
+    name: "Refinery L",
+    type: "refinery",
+  },
+  "840": {
+    name: "Assembler",
+    type: "assembler",
+  },
+  "841": {
+    name: "Shipyard S",
+    type: "shipyard",
+  },
+  "842": {
+    name: "Shipyard M",
+    type: "shipyard",
+  },
+  "843": {
+    name: "Shipyard L",
+    type: "shipyard",
+  },
+  "844": {
+    name: "Printer M",
+    type: "printer",
+  },
+};
 
 async function run(command: Deno.Command): Promise<void> {
   const { code, stdout, stderr } = await command.output();
@@ -59,13 +115,12 @@ await run(
 );
 
 // cleanup source
-await Deno.remove(source, { recursive: true });
+// await Deno.remove(source, { recursive: true });
 
 // move and name data files
 await renameFiles(dataDir, [
   { from: "fsd_binary/typelist.json", to: "typelist.json" },
   { from: "fsd_binary/types.json", to: "types.json" },
-  { from: "fsd_binary/groups.json", to: "groups.json" },
   { from: "fsd_lite/blueprints.json", to: "blueprints.json" },
   {
     from: "resource_pickle/res__staticdata_blueprintsbymaterialtypeids.json",
@@ -78,24 +133,30 @@ await Deno.remove(join(dataDir, "fsd_binary"), { recursive: true });
 await Deno.remove(join(dataDir, "fsd_lite"), { recursive: true });
 await Deno.remove(join(dataDir, "resource_pickle"), { recursive: true });
 
-// get structure ids from _data/typelistSelection.json
-const structureIds = Object.keys(
-  await JsonFileStore.read(
-    join(dataDir, "typelistSelection.json"),
-  ),
-);
 // get all structures
-const structures = await JsonFileStore.read<
-  { [key: string]: { includedTypeIDs: number[] } }
->(
+const structures = await JsonFileStore.read<Typelist>(
   join(dataDir, "typelist.json"),
 );
+
 // filter structures by structure ids
-const selectedStructures = Object.fromEntries(
-  Object.entries(structures).filter(([id]) => structureIds.includes(id)),
+const selectedStructures = Object.entries(structuresExtensions).reduce<
+  Structures
+>(
+  (acc, [structureID, structure]) => {
+    acc[structureID] = {
+      structureID: Number(structureID),
+      blueprintTypeIDs: structures[structureID].includedTypeIDs,
+      name: structure.name,
+      type: structure.type,
+    };
+
+    return acc;
+  },
+  {},
 );
 
-JsonFileStore.write(join(dataDir, "typelist.json"), selectedStructures);
+JsonFileStore.write(join(dataDir, "structures.json"), selectedStructures);
+await Deno.remove(join(dataDir, "typelist.json"), { recursive: true });
 
 // lookup blueprint in _data/blueprints.json
 const blueprints = await JsonFileStore.read<{ [key: string]: Blueprint }>(
@@ -107,7 +168,7 @@ const selectedBlueprints = Object.fromEntries(
     ([id]) =>
       Object.entries(selectedStructures).some(
         ([_structureId, structure]) =>
-          structure.includedTypeIDs.includes(Number(id)),
+          structure.blueprintTypeIDs.includes(Number(id)),
       ),
   ),
 );
