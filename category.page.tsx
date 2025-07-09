@@ -2,11 +2,10 @@ import { BlueprintDB } from "./lib/BlueprintDB.ts";
 import { sort } from "./lib/sort.ts";
 import { Blueprint, Group, Type } from "./types/types.d.ts";
 
-export const layout = "layout.tsx";
+export const layout = "layouts/layout.tsx";
 
 interface Data {
   blueprints: { [key: string]: Blueprint };
-  blueprintsbymaterialtypeids: { [key: string]: number[] };
   types: Type[];
   groups: { [key: string]: Group };
 }

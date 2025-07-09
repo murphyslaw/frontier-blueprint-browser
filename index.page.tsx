@@ -4,7 +4,7 @@ import { sort } from "./lib/sort.ts";
 import { StructureDB } from "./lib/StructureDB.ts";
 import { Blueprints, Structures } from "./types/types.d.ts";
 
-export const layout = "layout.tsx";
+export const layout = "layouts/layout.tsx";
 
 interface Data {
   blueprints: Blueprints;

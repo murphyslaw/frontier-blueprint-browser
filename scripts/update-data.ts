@@ -121,17 +121,13 @@ await run(
 await renameFiles(dataDir, [
   { from: "fsd_binary/typelist.json", to: "typelist.json" },
   { from: "fsd_binary/types.json", to: "types.json" },
+  { from: "fsd_binary/iconids.json", to: "iconids.json" },
   { from: "fsd_lite/blueprints.json", to: "blueprints.json" },
-  {
-    from: "resource_pickle/res__staticdata_blueprintsbymaterialtypeids.json",
-    to: "blueprintsbymaterialtypeids.json",
-  },
 ]);
 
 // cleanup data
 await Deno.remove(join(dataDir, "fsd_binary"), { recursive: true });
 await Deno.remove(join(dataDir, "fsd_lite"), { recursive: true });
-await Deno.remove(join(dataDir, "resource_pickle"), { recursive: true });
 
 // get all structures
 const structures = await JsonFileStore.read<Typelist>(

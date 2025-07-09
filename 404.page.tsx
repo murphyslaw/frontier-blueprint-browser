@@ -1,4 +1,4 @@
-export const layout = "layout.tsx";
+export const layout = "layouts/layout.tsx";
 export const features = [];
 
 export default function () {
